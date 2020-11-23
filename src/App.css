@@ -36,3 +36,8 @@
     transform: rotate(360deg);
   }
 }
+
+.teachers {
+  background-color: #61dafb;
+  padding: 30px;
+}
