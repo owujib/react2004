@@ -1,54 +1,49 @@
 import React from 'react';
-import StudentForm from './SrudentForm';
-import Student from './Student';
-import Teachers from './Teachers';
-import TeachersForm from './TeachersForm';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Route } from 'react-router-dom';
+import axios from 'axios';
+import './App.css';
+import Home from './Home';
+import About from './About';
+import Contact from './Contact';
+import Navigation from './Navigation';
+import Gallery from './Gallery';
+import SingleGallery from './SingleGallery';
 
 class App extends React.Component {
-  state = {
-    teachers: [
-      { id: 1, name: 'Ronke' },
-      { id: 2, name: 'Jack' },
-      { id: 3, name: 'Smith' },
-      { id: 4, name: 'Mark' },
-      { id: 5, name: 'John' },
-      { id: 6, name: 'Jin Mori' },
-    ],
-    students: [
-      { id: 1, name: 'Ronke' },
-      { id: 2, name: 'Jack' },
-      { id: 3, name: 'Smith' },
-      { id: 4, name: 'Mark' },
-      { id: 5, name: 'John' },
-      { id: 6, name: 'Jin Mori' },
-    ],
-  };
-
-  addTeachers = (data) => {
-    let newId = this.state.teachers.length + 1;
-    const { name } = data;
-    let newTeachers = { id: newId, name: name };
-    this.setState({
-      teachers: [...this.state.teachers, newTeachers],
-    });
-  };
-  addStudents = (data) => {
-    let newId = this.state.students.length + 1;
-    const { name } = data;
-    let newStudent = { id: newId, name: name };
-    this.setState({
-      students: [...this.state.students, newStudent],
-    });
-  };
-
+  constructor() {
+    super();
+    this.state = {
+      photos: [],
+    };
+  }
+  componentDidMount() {
+    axios
+      .get('http://jsonplaceholder.typicode.com/photos')
+      .then((response) => {
+        this.setState({
+          photos: response.data.slice(0, 50),
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
   render() {
-    const { teachers, students } = this.state;
     return (
       <div>
-        <Teachers teachers={teachers} />
-        <TeachersForm addTeachers={this.addTeachers} />
-        <Student students={students} />
-        <StudentForm addStudents={this.addStudents} />
+        <Navigation />
+        <Route exact path="/" component={Home} />
+        <Route path="/about" component={About} />
+        <Route path="/contact" component={Contact} />
+        <Route path="/gallery/:id" component={SingleGallery} />
+        <Route
+          path="/gallery"
+          exact
+          render={(routerProps) => (
+            <Gallery {...routerProps} photos={this.state.photos} />
+          )}
+        />
       </div>
     );
   }
