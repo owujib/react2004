@@ -1,6 +1,6 @@
 import React from 'react';
 
-class TeachersForm extends React.Component {
+class StudentForm extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -17,7 +17,7 @@ class TeachersForm extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.addTeachers(this.state);
+    this.props.addStudents(this.state);
   };
 
   render() {
@@ -38,4 +38,4 @@ class TeachersForm extends React.Component {
   }
 }
 
-export default TeachersForm;
+export default StudentForm;
