@@ -25,8 +25,8 @@ export default function Navigation() {
             </Link>
           </Nav>
           <Nav>
-            <Link className="nav-link" to="/gallery">
-              Gallery
+            <Link className="nav-link" to="/post">
+              Post
             </Link>
           </Nav>
           <Nav>

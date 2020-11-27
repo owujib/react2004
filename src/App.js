@@ -7,22 +7,22 @@ import Home from './Home';
 import About from './About';
 import Contact from './Contact';
 import Navigation from './Navigation';
-import Gallery from './Gallery';
-import SingleGallery from './SingleGallery';
+import Post from './Post';
+import PostDetail from './PostDetail';
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      photos: [],
+      posts: [],
     };
   }
   componentDidMount() {
     axios
-      .get('http://jsonplaceholder.typicode.com/photos')
+      .get('http://jsonplaceholder.typicode.com/posts')
       .then((response) => {
         this.setState({
-          photos: response.data.slice(0, 50),
+          posts: response.data.slice(0, 50),
         });
       })
       .catch((err) => {
@@ -36,13 +36,13 @@ class App extends React.Component {
         <Route exact path="/" component={Home} />
         <Route path="/about" component={About} />
         <Route path="/contact" component={Contact} />
-        <Route path="/gallery/:id" component={SingleGallery} />
+        <Route path="/post/:id" component={PostDetail} />
+
+        {/* handling props on route*/}
         <Route
-          path="/gallery"
+          path="/post"
           exact
-          render={(routerProps) => (
-            <Gallery {...routerProps} photos={this.state.photos} />
-          )}
+          render={(routerProps) => <Post {...routerProps} />}
         />
       </div>
     );
